@@ -9,13 +9,21 @@
     <script src="./dist/bundle.js"></script>
     <div class="app">
       <div class="header">
-        <h1>Cocou</h1>
+        <h1>Avatar Generator</h1>
       </div>
       <div class="body">
         <canvas id="canvas" width="300" height="300"></canvas>
       </div>
       <div class="footer">
         <button id="reset-button">Reset</button>
+        <label>Width</label>
+        <div>
+          <input type="range" min="100" max="1000" value="150" step="10" class="slider" id="widthCanvas">
+        </div>
+        <label>Height</label>
+        <div>
+          <input type="range" min="100" max="1000" value="150" step="10" class="slider" id="heightCanvas">
+        </div>
       </div>
     </div>
   </body>

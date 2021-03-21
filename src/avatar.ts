@@ -47,13 +47,14 @@ function generateRowColors(nbPixelWidth: number) : colorInterface[] {
   return bitsColor;
 }
 
-export function createInvader({ x, y, widthPixel, heightPixel }: borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number) : void {
+export function createInvader(border : borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number) : void {
+  const { x: xOffset , y: yOffset , widthPixel, heightPixel } = border;
   for(let y : number = 0; y < nbPixelWidth; y += 1) {
     const bitsColor = generateRowColors(nbPixelWidth);
     for(let x: number = 0; x < nbPixelHeight; x += 1) {
       createSquare(
-        { x: x + (x * widthPixel),
-          y: y + (y * heightPixel),
+        { x: xOffset + (x * widthPixel),
+          y: yOffset + (y * heightPixel),
           widthPixel,
           heightPixel
          },

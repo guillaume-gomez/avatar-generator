@@ -1,13 +1,18 @@
-h1 {
-  color: orange;
-}
-
 html {
-   background: black;
+   background: #121212;
+   color: white;
+   font-family: Arial
 }
 
 canvas {
   border: 5px solid grey;
+}
+
+.header {
+  width: 100%;
+  background: #050505;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 .app {
@@ -15,4 +20,9 @@ canvas {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
 }
