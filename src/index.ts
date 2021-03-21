@@ -10,7 +10,6 @@ function load() {
     const context = canvas.getContext('2d');
     createInvader({x: 10, y:10, widthPixel: 10, heightPixel: 10}, context,  8, 8);
   }
-  //draw();
 }
 
 
