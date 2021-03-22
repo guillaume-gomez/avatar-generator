@@ -71,6 +71,14 @@ input {
   min-width: 200px;
 }
 
+button {
+  border: 1px solid white;
+  border-radius: 2px;
+  margin: 8px;
+  background: none;
+  color: white;
+}
+
 .header {
   min-height: 10%;
   width: 100%;
@@ -87,8 +95,9 @@ input {
 .buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
-  border: 2px solid green;
+  padding: 16px 0;
 }
 
 .app {
