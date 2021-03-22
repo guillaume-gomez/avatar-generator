@@ -43,15 +43,25 @@ function generateRowColors(nbPixelWidth: number) : colorInterface[] {
   for(let i = 0; i < Math.floor(nbPixelWidth/2); i++) {
     bitsColor.push(randomInArrayColor(randomColors));
   }
+
   bitsColor.slice(0).reverse().forEach((bit) => bitsColor.push(bit));
+
+  // add one more bits for odds width
+  if(nbPixelWidth % 2 !== 0) {
+    bitsColor.splice(Math.floor(nbPixelWidth/2) + 1, 0, randomInArrayColor(randomColors));
+  }
+
   return bitsColor;
 }
 
 export function createInvader(border : borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number) : void {
+  console.log(nbPixelWidth)
+  console.log(nbPixelHeight)
+  console.log(border)
   const { x: xOffset , y: yOffset , widthPixel, heightPixel } = border;
-  for(let y : number = 0; y < nbPixelWidth; y += 1) {
+  for(let y : number = 0; y < nbPixelHeight; y += 1) {
     const bitsColor = generateRowColors(nbPixelWidth);
-    for(let x: number = 0; x < nbPixelHeight; x += 1) {
+    for(let x: number = 0; x < bitsColor.length; x += 1) {
       createSquare(
         { x: xOffset + (x * widthPixel),
           y: yOffset + (y * heightPixel),
