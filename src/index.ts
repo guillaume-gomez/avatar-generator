@@ -25,8 +25,10 @@ function changeCanvasSlider(size: "width"| "height", e: Event) : void {
   const newValue : number = (e as any).target.value;
   if(size === "width") {
     widthCanvas = newValue;
+    document.getElementById("widthCanvasValue").textContent = newValue.toString();
   } else {
     heightCanvas = newValue;
+    document.getElementById("heightCanvasValue").textContent = newValue.toString();
   }
   setCanvasSize(widthCanvas, newValue);
 }
@@ -35,8 +37,10 @@ function changePixelSlider(size: "x"| "y", e: Event) : void {
   const newValue : number = (e as any).target.value;
   if(size === "x") {
     nbPixelX = newValue;
+    document.getElementById("nbPixelXValue").textContent = newValue.toString();
   } else {
     nbPixelY = newValue;
+    document.getElementById("nbPixelYValue").textContent = newValue.toString();
   }
 }
 
