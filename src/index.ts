@@ -52,6 +52,16 @@ function feedColors() {
   console.log(colors);
 }
 
+function saveImage() {
+  const canvas = getCanvas();
+  if(canvas) {
+    const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href = image;
+  } else {
+    alert("canvas not detected");
+  }
+}
+
 // GLOBALS VARIABLES
 let widthCanvas = 0;
 let heightCanvas = 0;
@@ -66,6 +76,11 @@ window.onload = function() {
   const button = document.getElementById("reset-button");
    if(button) {
      button.addEventListener("click", load);
+  }
+
+  const saveButton = document.getElementById("save-button");
+   if(saveButton) {
+     saveButton.addEventListener("click", saveImage);
   }
 
   const inputWidth = document.getElementById("widthCanvas");
