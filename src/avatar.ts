@@ -39,7 +39,7 @@ function generateRowColors(nbPixelWidth: number, colorsPalette: colorInterface[]
 
   // add one more bits for odds width
   if(nbPixelWidth % 2 !== 0) {
-    bitsColor.splice(Math.floor(nbPixelWidth/2) + 1, 0, randomInArrayColor(colorsPalette));
+    bitsColor.splice(Math.floor(nbPixelWidth/2), 0, randomInArrayColor(colorsPalette));
   }
 
   return bitsColor;
