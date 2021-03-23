@@ -5,7 +5,7 @@ interface borderInterface {
   heightPixel: number;
 }
 
-interface colorInterface {
+export interface colorInterface {
   r: number;
   g: number;
   b: number;
@@ -29,38 +29,26 @@ function createSquare(border: borderInterface, context: CanvasRenderingContext2D
 }
 
 
-function generateRowColors(nbPixelWidth: number) : colorInterface[] {
+function generateRowColors(nbPixelWidth: number, colorsPalette: colorInterface[]) : colorInterface[] {
   let bitsColor : colorInterface[] = [];
-  const randomColors : colorInterface[] =[
-    randomColor(),
-    randomColor(),
-    randomColor(),
-    BLACK,
-    BLACK,
-    BLACK
-  ];
-
   for(let i = 0; i < Math.floor(nbPixelWidth/2); i++) {
-    bitsColor.push(randomInArrayColor(randomColors));
+    bitsColor.push(randomInArrayColor(colorsPalette));
   }
 
   bitsColor.slice(0).reverse().forEach((bit) => bitsColor.push(bit));
 
   // add one more bits for odds width
   if(nbPixelWidth % 2 !== 0) {
-    bitsColor.splice(Math.floor(nbPixelWidth/2) + 1, 0, randomInArrayColor(randomColors));
+    bitsColor.splice(Math.floor(nbPixelWidth/2) + 1, 0, randomInArrayColor(colorsPalette));
   }
 
   return bitsColor;
 }
 
-export function createInvader(border : borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number) : void {
-  console.log(nbPixelWidth)
-  console.log(nbPixelHeight)
-  console.log(border)
+export function createInvader(border : borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number, colorsPalette: colorInterface[]) : void {
   const { x: xOffset , y: yOffset , widthPixel, heightPixel } = border;
   for(let y : number = 0; y < nbPixelHeight; y += 1) {
-    const bitsColor = generateRowColors(nbPixelWidth);
+    const bitsColor = generateRowColors(nbPixelWidth, colorsPalette);
     for(let x: number = 0; x < bitsColor.length; x += 1) {
       createSquare(
         { x: xOffset + (x * widthPixel),

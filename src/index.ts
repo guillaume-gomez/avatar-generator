@@ -1,5 +1,6 @@
 import { setCanvasSize, changeBackgroundCanvas, getCanvas, draw } from "./canvas";
-import { createInvader } from "./avatar";
+import { createInvader, colorInterface } from "./avatar";
+import { hexToRgb } from "./tools";
 
 function load() {
  const canvas = getCanvas();
@@ -16,7 +17,7 @@ function load() {
     // refresh
     context.clearRect(0, 0, canvas.width, canvas.height);
     
-    createInvader({x: offsetWidth /2 , y: offsetHeight / 2, widthPixel, heightPixel }, context, nbPixelWidth, nbPixelHeight);
+    createInvader({x: offsetWidth /2 , y: offsetHeight / 2, widthPixel, heightPixel }, context, nbPixelWidth, nbPixelHeight, colors);
   }
 }
 
@@ -39,17 +40,47 @@ function changePixelSlider(size: "x"| "y", e: Event) : void {
   }
 }
 
+function feedColors() {
+  const newColors : colorInterface[] = [];
+  Array.from(document.querySelectorAll("input[type=color]")).forEach((item: HTMLInputElement, index: number) => {
+    const checkbox = document.getElementById(`color-${index+1}`) as HTMLInputElement;
+    if(checkbox.checked) {
+      newColors.push(hexToRgb(item.value));
+    }
+  });
+  colors = newColors.slice();
+  console.log(colors);
+}
+
+function saveImage() {
+  const canvas = getCanvas();
+  if(canvas) {
+    const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href = image;
+  } else {
+    alert("canvas not detected");
+  }
+}
+
 // GLOBALS VARIABLES
 let widthCanvas = 0;
 let heightCanvas = 0;
 let nbPixelX = 0;
 let nbPixelY = 0;
+let colors :colorInterface[] = [];
 window.onload = function() {
-  load()
+  feedColors();
+  load();
+  
   // connect button + inputs
   const button = document.getElementById("reset-button");
    if(button) {
      button.addEventListener("click", load);
+  }
+
+  const saveButton = document.getElementById("save-button");
+   if(saveButton) {
+     saveButton.addEventListener("click", saveImage);
   }
 
   const inputWidth = document.getElementById("widthCanvas");
@@ -69,5 +100,15 @@ window.onload = function() {
   if(inputPixelY) {
     inputPixelY.addEventListener("change", (e) => { changePixelSlider("y", e); load() });
   }
+
+  //connect each color input
+  Array.from(document.querySelectorAll("input[type=color]")).forEach( (item: HTMLInputElement) => {
+    item.addEventListener("change", feedColors);
+  })
+  //then colors checkboxes checkbox
+  Array.from(document.querySelectorAll("input[type=checkbox]")).forEach( (item: HTMLInputElement) => {
+    item.addEventListener("change", feedColors);
+  })
+
 };
 
