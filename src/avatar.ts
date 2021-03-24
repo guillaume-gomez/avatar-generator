@@ -39,7 +39,7 @@ function generateRowColors(nbPixelWidth: number, colorsPalette: colorInterface[]
 
   // add one more bits for odds width
   if(nbPixelWidth % 2 !== 0) {
-    bitsColor.splice(Math.floor(nbPixelWidth/2) + 1, 0, randomInArrayColor(colorsPalette));
+    bitsColor.splice(Math.floor(nbPixelWidth/2), 0, randomInArrayColor(colorsPalette));
   }
 
   return bitsColor;
@@ -47,6 +47,7 @@ function generateRowColors(nbPixelWidth: number, colorsPalette: colorInterface[]
 
 export function createInvader(border : borderInterface, context: CanvasRenderingContext2D, nbPixelWidth: number, nbPixelHeight: number, colorsPalette: colorInterface[]) : void {
   const { x: xOffset , y: yOffset , widthPixel, heightPixel } = border;
+  console.log(border)
   for(let y : number = 0; y < nbPixelHeight; y += 1) {
     const bitsColor = generateRowColors(nbPixelWidth, colorsPalette);
     for(let x: number = 0; x < bitsColor.length; x += 1) {

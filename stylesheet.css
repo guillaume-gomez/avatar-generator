@@ -74,9 +74,8 @@ h3 {
   padding: 8px;
 }
 
-input {
-  //min-width: 200px;
-
+input[type=range] {
+  width: 50%;
 }
 
 button {
@@ -164,4 +163,9 @@ button {
   text-align: center;
   justify-content: center;
   flex-direction: column;
+}
+
+
+.helper {
+  font-size: 0.75rem;
 }

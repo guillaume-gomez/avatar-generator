@@ -7,17 +7,49 @@ function load() {
   if (canvas.getContext) {
     const nbPixelWidth = nbPixelX || 8;
     const nbPixelHeight = nbPixelY || 8;
-    const widthPixel = Math.floor(canvas.width / nbPixelWidth);
-    const offsetWidth = (canvas.width % nbPixelWidth);
-    
-    const heightPixel = Math.floor(canvas.height / nbPixelHeight);
-    const offsetHeight = (canvas.height % nbPixelHeight);
-
     const context = canvas.getContext('2d');
     // refresh
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
-    createInvader({x: offsetWidth /2 , y: offsetHeight / 2, widthPixel, heightPixel }, context, nbPixelWidth, nbPixelHeight, colors);
+
+
+    // only one avatar
+    if(repetition === 1) {
+      
+      const avatarWidth = Math.floor(canvas.width / nbPixelWidth);
+      const offsetWidth = (canvas.width % nbPixelWidth);
+      
+      const avatarHeight = Math.floor(canvas.height / nbPixelHeight);
+      const offsetHeight = (canvas.height % nbPixelHeight);
+
+      createInvader(
+        {x: offsetWidth /2 , y: offsetHeight / 2, widthPixel: avatarWidth, heightPixel: avatarWidth },
+        context,
+        nbPixelWidth,
+        nbPixelHeight,
+        colors
+      );
+    } else { // patchwork
+      const avatarWidth = canvas.width / repetition;
+      const avatarHeight = canvas.height / repetition;
+      
+      const widthPixel = Math.floor(avatarWidth / nbPixelWidth);
+      const offsetWidth = avatarWidth % nbPixelWidth;
+
+      const heightPixel = Math.floor(avatarHeight / nbPixelHeight);
+      const offsetHeight = (avatarHeight % nbPixelHeight);
+
+      for(let _x = 0; _x < repetition; _x += 1) {
+        for(let _y = 0; _y < repetition; _y += 1) {
+          createInvader(
+            {x: (offsetWidth / 2) +_x * avatarWidth , y: (offsetHeight / 2) + _y * avatarHeight, widthPixel, heightPixel },
+            context,
+            nbPixelWidth,
+            nbPixelHeight,
+            colors
+          );
+        }
+      }
+    }
   }
 }
 
@@ -53,7 +85,12 @@ function feedColors() {
     }
   });
   colors = newColors.slice();
-  console.log(colors);
+}
+
+function changeRepetition(e: Event) {
+  const newValue = (e as any).target.value;
+  document.getElementById("repetitionValue").textContent = newValue.toString();
+  repetition = newValue
 }
 
 function saveImage() {
@@ -71,6 +108,7 @@ let widthCanvas = 0;
 let heightCanvas = 0;
 let nbPixelX = 0;
 let nbPixelY = 0;
+let repetition = 1;
 let colors :colorInterface[] = [];
 window.onload = function() {
   feedColors();
@@ -103,6 +141,11 @@ window.onload = function() {
   const inputPixelY = document.getElementById("nbPixelY");
   if(inputPixelY) {
     inputPixelY.addEventListener("change", (e) => { changePixelSlider("y", e); load() });
+  }
+
+  const repetition = document.getElementById("repetition");
+  if(repetition) {
+    repetition.addEventListener("change", (e) => { changeRepetition(e); load() });
   }
 
   //connect each color input
