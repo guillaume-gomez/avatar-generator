@@ -164,3 +164,8 @@ button {
   justify-content: center;
   flex-direction: column;
 }
+
+
+.helper {
+  font-size: 0.75rem;
+}
